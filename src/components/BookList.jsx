@@ -42,9 +42,9 @@ class BookList extends Component {
           </Button>
         </Form>
 
-        <Row xs={1} md={4} lg={5} className="g-4">
+        <Row xs={1} md={3} className="g-4">
           {this.state.filtrato.map((libro, i) => (
-            <Col key={i} className="g-4 my-2">
+            <Col key={libro.asin} className="g-4 my-2">
               <SingleBook book={libro} />
             </Col>
           ))}
