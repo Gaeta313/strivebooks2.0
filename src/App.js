@@ -12,6 +12,7 @@ class App extends Component {
 
   state={
     bookId:null,
+    aggiornamento:undefined
   }
 
   setBookId=(bookId)=>{
@@ -19,14 +20,16 @@ class App extends Component {
     console.log('stato cambiato')
   }
 
+  setAggiornamento=(valore)=>{
+    console.log('set aggiornamento')
+    this.setState({aggiornamento:valore});
+  }
+
   render() {
      return (
     <div className="App">
       <WarningSign text="Questo è un allert" />
       <MyBadge text="Questo è un badge" color="primary" />
-      {
-        //qui avremo due colonne, una che crea book list e l'altra che crea la comment area
-      }
 
       <Row>
         <Col xs={7}>
@@ -34,7 +37,7 @@ class App extends Component {
         </Col>
         <Col xs={5}>
           {
-            this.state.bookId ?<CommentArea bookId={this.state.bookId}/>: <h1>Seleziona un libro</h1>
+            this.state.bookId ?<CommentArea  bookId={this.state.bookId} setAggiornamento={this.setAggiornamento}/>: <h1>Seleziona un libro</h1>
           }
         </Col>
       </Row>

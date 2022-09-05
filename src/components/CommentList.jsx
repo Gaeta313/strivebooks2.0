@@ -12,7 +12,7 @@ class CommentList extends Component {
       
         {
             this.props.commenti.map((commento)=>(
-                 <SingleComment  key={commento._id} commento={commento} />
+                 <SingleComment setAggiornamento={this.props.setAggiornamento}  key={commento._id} commento={commento} />
             ))
             
         }

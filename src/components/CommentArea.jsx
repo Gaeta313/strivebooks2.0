@@ -52,8 +52,8 @@ class CommentArea extends Component {
         {this.state.loading && <Spinner className="my-3" animation="border" />}
         {!this.state.loading && !this.state.error && (
           <div>
-            <CommentList commenti={this.state.commenti} />
-            <AddComment bookId={this.props.bookId} />
+            <CommentList commenti={this.state.commenti} setAggiornamento={this.props.setAggiornamento} />
+            <AddComment bookId={this.props.bookId} setAggiornamento={this.props.setAggiornamento} />
           </div>
         )}
         {
