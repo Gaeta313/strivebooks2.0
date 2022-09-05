@@ -45,7 +45,7 @@ class BookList extends Component {
         <Row xs={1} md={3} className="g-4">
           {this.state.filtrato.map((libro, i) => (
             <Col key={libro.asin} className="g-4 my-2">
-              <SingleBook book={libro} />
+              <SingleBook selectedBookId={this.props.selectedBookId} setBookId={this.props.setBookId} book={libro} />
             </Col>
           ))}
         </Row>

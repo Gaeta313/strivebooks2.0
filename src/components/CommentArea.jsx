@@ -12,10 +12,19 @@ class CommentArea extends Component {
 
   componentDidMount = async () => {
     this.getId();
+    console.log('fatto')
   };
+
+  componentDidUpdate(prevProps) {
+    console.log('update');
+    if(prevProps !== this.props){
+      this.getId();
+    }
+  }
 
   getId = async () => {
     try {
+      console.log('try')
       let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/comments/" +
           this.props.bookId,

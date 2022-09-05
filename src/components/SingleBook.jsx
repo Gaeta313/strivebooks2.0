@@ -8,14 +8,12 @@ class SingleBook extends Component {
   };
 
   render() {
-    if (!this.state.selected) {
+    if (this.props.book.asin !== this.props.selectedBookId) {
       return (
         <Card
           className="h-100"
           onClick={() => {
-            let nuovo = this.state.selected;
-            nuovo = !nuovo;
-            this.setState({ selected: nuovo });
+            this.props.setBookId(this.props.book.asin);
           }}
         >
           <Card.Img width="100%" variant="top" src={this.props.book.img} />
@@ -31,9 +29,6 @@ class SingleBook extends Component {
           border="danger"
           className="h-100"
           onClick={() => {
-            let nuovo = this.state.selected;
-            nuovo = !nuovo;
-            this.setState({ selected: nuovo });
           }}
         >
           <Card.Img width="100%" variant="top" src={this.props.book.img} />
@@ -41,7 +36,7 @@ class SingleBook extends Component {
             <Card.Title>{this.props.book.title}</Card.Title>
           </Card.Body>
         </Card>
-        <CommentArea bookId={this.props.book.asin}/>
+       {/*  <CommentArea bookId={this.props.book.asin}/> */}
         </Container>
        
       );
