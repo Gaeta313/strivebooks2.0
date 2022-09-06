@@ -1,24 +1,20 @@
-import { Component } from "react";
+
 import { ListGroup} from "react-bootstrap";
 import SingleComment from "./SingleComment";
 
-class CommentList extends Component {
+const CommentList = (props) =>  {
 
 
-
-
-  render() {
     return <ListGroup>
       
         {
-            this.props.commenti.map((commento)=>(
-                 <SingleComment setAggiornamento={this.props.setAggiornamento}  key={commento._id} commento={commento} />
+            props.commenti.map((commento)=>(
+                 <SingleComment setAggiornamento={props.setAggiornamento}  key={commento._id} commento={commento} />
             ))
             
         }
        
     </ListGroup>;
-  }
 }
 
 export default CommentList;

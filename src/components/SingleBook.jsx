@@ -1,24 +1,25 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 import { Card, Container } from "react-bootstrap";
 import CommentArea from "./CommentArea";
 
-class SingleBook extends Component {
-  state = {
+const SingleBook = (props)=> {
+  /* state = {
     selected: false,
-  };
+  }; */
 
-  render() {
-    if (this.props.book.asin !== this.props.selectedBookId) {
+  const [selected, setSelected] = useState(false);
+
+    if (props.book.asin !== props.selectedBookId) {
       return (
         <Card
           className="h-100"
           onClick={() => {
-            this.props.setBookId(this.props.book.asin);
+            props.setBookId(props.book.asin);
           }}
         >
-          <Card.Img width="100%" variant="top" src={this.props.book.img} />
+          <Card.Img width="100%" variant="top" src={props.book.img} />
           <Card.Body>
-            <Card.Title>{this.props.book.title}</Card.Title>
+            <Card.Title>{props.book.title}</Card.Title>
           </Card.Body>
         </Card>
       );
@@ -31,17 +32,15 @@ class SingleBook extends Component {
           onClick={() => {
           }}
         >
-          <Card.Img width="100%" variant="top" src={this.props.book.img} />
+          <Card.Img width="100%" variant="top" src={props.book.img} />
           <Card.Body>
-            <Card.Title>{this.props.book.title}</Card.Title>
+            <Card.Title>{props.book.title}</Card.Title>
           </Card.Body>
         </Card>
-       {/*  <CommentArea bookId={this.props.book.asin}/> */}
         </Container>
        
       );
     }
-  }
 }
 
 export default SingleBook;

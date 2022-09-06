@@ -1,28 +1,32 @@
-import { Component } from "react";
+import { useState } from "react";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
 import SingleBook from "./SingleBook";
 
-class BookList extends Component {
+const BookList = (props) =>  {
  
-    state = {
+   /*  state = {
     ricerca: "",
     filtrato: this.props.books,
-  };
+  }; */
+
+  const [ricerca, setRicerca] = useState('');
+  const [filtrato, setFiltrato] = useState(props.books);
 
   //la ricerca è keySensitive
-  filterBookList= () => {
-    console.log(this.state);
-     let filtrato = this.props.books.filter(book =>(
-      book.title.search(this.state.ricerca) !== -1)
+  const filterBookList= () => {
+     let filtrato = props.books.filter(book =>(
+      book.title.search(ricerca) !== -1)
     );
-    this.setState({
+    /* this.setState({
         ricerca: "",
         filtrato: filtrato
-    })
+    }) */
+    setRicerca('');
+    setFiltrato(filtrato);
   }
 
 
-  render() {
+ 
     return (
       <Container fluid>
         <Form className="text-left">
@@ -31,27 +35,28 @@ class BookList extends Component {
             <Form.Control
               type="text"
               placeholder="Cerca Libro"
-              value={this.state.ricerca}
+              value={ricerca}
               onChange={(e) => {
-                this.setState({ ricerca: e.target.value });
+                //this.setState({ ricerca: e.target.value });
+                setRicerca(e.target.value); //
               }}
             />
           </Form.Group>
-          <Button variant="primary" type="button" onClick={this.filterBookList}>
+          <Button variant="primary" type="button" onClick={filterBookList}>
             Cerca
           </Button>
         </Form>
 
         <Row xs={1} md={3} className="g-4">
-          {this.state.filtrato.map((libro, i) => (
+          {filtrato.map((libro, i) => (
             <Col key={libro.asin} className="g-4 my-2">
-              <SingleBook selectedBookId={this.props.selectedBookId} setBookId={this.props.setBookId} book={libro} />
+              <SingleBook selectedBookId={props.selectedBookId} setBookId={props.setBookId} book={libro} />
             </Col>
           ))}
         </Row>
       </Container>
     );
-  }
+  
 }
 
 export default BookList;

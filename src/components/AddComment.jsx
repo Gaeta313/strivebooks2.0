@@ -1,16 +1,22 @@
-import { Component } from "react";
+import { Component, useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 
-class AddComment extends Component {
-  state = {
+const AddComment = (props) =>{
+ /*  state = {
     commento: {
       comment: "",
       rate: 1,
       elementId: this.props.bookId,
     },
-  };
+  }; */
 
-  componentDidUpdate(prevProps) {
+  const [commento, setCommento] = useState({
+    comment: "",
+    rate: 1,
+    elementId: props.bookId,
+  })
+
+  /* componentDidUpdate(prevProps) {
     if (prevProps.bookId !== this.props.bookId) {
       this.setState({
         commento: {
@@ -19,16 +25,23 @@ class AddComment extends Component {
         },
       });
     }
-  }
+  } */
 
-  submit = async (e) => {
+  useEffect(() => {
+    setCommento({
+      ...commento,
+      elementId: props.bookId,
+    })
+  },[props.bookId])
+
+ const submit = async (e) => {
     e.preventDefault();
-    console.log(this.state.commento);
+    console.log(commento);
     let response = await fetch(
       "https://striveschool-api.herokuapp.com/api/comments/",
       {
         method: "POST",
-        body: JSON.stringify(this.state.commento),
+        body: JSON.stringify(commento),
         headers: {
           "Content-Type": "application/json",
           Authorization:
@@ -38,35 +51,47 @@ class AddComment extends Component {
     );
 
     if (response.ok) {
-      this.props.setAggiornamento(Math.random());
-      this.setState({
+      props.setAggiornamento(Math.random());
+      /* this.setState({
         commento: {
           comment: "",
           rate: 1,
           elementId: this.props.bookId,
         },
-      });
+      }); */
+      setCommento(
+        {
+          comment: "",
+          rate: 1,
+          elementId: props.bookId,
+        }
+      );
       console.log("success");
     }
   };
 
-  render() {
     return (
       <Container>
-        <Form onSubmit={this.submit} className="text-left">
+        <Form onSubmit={submit} className="text-left">
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Commento :</Form.Label>
             <Form.Control
               as="textarea"
               placeholder="Scrivi un commento"
-              value={this.state.commento.comment}
+              value={commento.comment}
               onChange={(e) => {
-                this.setState({
+                /* this.setState({
                   commento: {
                     ...this.state.commento,
                     comment: e.target.value,
                   },
-                });
+                }); */
+                setCommento(
+                  {
+                    ...commento,
+                    comment: e.target.value,
+                  }
+                );
               }}
             />
           </Form.Group>
@@ -74,14 +99,20 @@ class AddComment extends Component {
             <Form.Label>Example select</Form.Label>
             <Form.Control
               as="select"
-              value={this.state.commento.rate}
+              value={commento.rate}
               onChange={(e) => {
-                this.setState({
+               /*  this.setState({
                   commento: {
                     ...this.state.commento,
                     rate: e.target.value,
                   },
-                });
+                }); */
+                setCommento(
+                  {
+                    ...commento,
+                    rate: e.target.value,
+                  }
+                );
               }}
             >
               <option>1</option>
@@ -97,7 +128,7 @@ class AddComment extends Component {
         </Form>
       </Container>
     );
-  }
+
 }
 
 export default AddComment;

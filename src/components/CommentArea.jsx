@@ -1,33 +1,46 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Container, Spinner } from "react-bootstrap";
 import AddComment from "./AddComment";
 import CommentList from "./CommentList";
 
-class CommentArea extends Component {
-  state = {
+const CommentArea = (props) =>  {
+  /* state = {
     commenti: [],
     error: false,
     loading: true,
-  };
+  }; */
 
-  componentDidMount = async () => {
+  const [commenti, setCommenti] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  /* componentDidMount = async () => {
     this.getId();
     console.log('fatto')
-  };
+  }; */
 
-  componentDidUpdate(prevProps) {
+  useEffect(() => {
+    getId();
+  },[])
+
+  /* componentDidUpdate(prevProps) {
     console.log('update');
     if(prevProps !== this.props){
       this.getId();
     }
-  }
+  } */
 
-  getId = async () => {
+  useEffect(() => {
+   getId();
+    console.log('componentDidUpdate');
+  },[props])
+
+   const getId = async () => {
     try {
       console.log('try')
       let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/comments/" +
-          this.props.bookId,
+          props.bookId,
         {
           method: "GET",
           headers: {
@@ -37,33 +50,33 @@ class CommentArea extends Component {
         }
       );
       let data = await response.json();
-      console.log(data);
-      this.setState({ commenti: data,
-    loading: false});
+      /* this.setState({ commenti: data,
+    loading: false}); */
+    setCommenti(data);
+    setLoading(false);
     } catch (e) {
-        this.setState({ error: true}
-        )
+        /* this.setState({ error: true} )*/
+        setError(true);
+       
     }
   };
 
-  render() {
     return (
       <Container>
-        {this.state.loading && <Spinner className="my-3" animation="border" />}
-        {!this.state.loading && !this.state.error && (
+        {loading && <Spinner className="my-3" animation="border" />}
+        {!loading && !error && (
           <div>
-            <CommentList commenti={this.state.commenti} setAggiornamento={this.props.setAggiornamento} />
-            <AddComment bookId={this.props.bookId} setAggiornamento={this.props.setAggiornamento} />
+            <CommentList commenti={commenti} setAggiornamento={props.setAggiornamento} />
+            <AddComment bookId={props.bookId} setAggiornamento={props.setAggiornamento} />
           </div>
         )}
         {
-            !this.state.loading && this.state.error && (
+            !loading && error && (
                 <Alert variant="danger">Errore</Alert>
               )}
         
       </Container>
     );
-  }
 }
 
 export default CommentArea;
