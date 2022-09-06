@@ -10,6 +10,17 @@ class AddComment extends Component {
     },
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.bookId !== this.props.bookId) {
+      this.setState({
+        commento: {
+          ...this.state.commento,
+          elementId: this.props.bookId,
+        },
+      });
+    }
+  }
+
   submit = async (e) => {
     e.preventDefault();
     console.log(this.state.commento);
@@ -25,7 +36,7 @@ class AddComment extends Component {
         },
       }
     );
-   
+
     if (response.ok) {
       this.props.setAggiornamento(Math.random());
       this.setState({
